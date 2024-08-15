@@ -8,6 +8,7 @@ const formatAmountForStripe = (amount) => {
     return Math.round(amount * 100);
 }
 
+// request handling for stripe transactions
 export async function POST(req) {
     const params = {
         submit_type: "subscription",
