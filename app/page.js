@@ -2,7 +2,7 @@ import Image from "next/image";
 import getStripe from "@/utils/get-stripe";
 import Head from "next/head";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { AppBar, Box, Button, Container, Grid, Card, CardContent, Typography, Toolbar } from "@mui/material";
+import { AppBar, Box, Button, Container, Grid, Typography, Toolbar } from "@mui/material";
 
 export default function Home() {
   return (
@@ -16,8 +16,8 @@ export default function Home() {
         <Toolbar>
           <Typography variant="h6" style={{flexGrow: 1}}>Flashcard SaaS</Typography>
           <SignedOut>
-            <Button color="inherit">Login</Button>
-            <Button color="inherit">Sign Up</Button>
+            <Button color="inherit" href="/sign-in">Login</Button>
+            <Button color="inherit" href="sign-up">Sign Up</Button>
           </SignedOut>
           <SignedIn>
             <UserButton />
@@ -40,7 +40,7 @@ export default function Home() {
           {" "}
           The easiest way to make flashcards from your text
         </Typography>
-        <Button variant="contained" color="primary" sx={{mt: 2}}>
+        <Button variant="contained" color="primary" sx={{mt: 2}} href="/sign-up">
           Get Started
         </Button>
       </Container>
