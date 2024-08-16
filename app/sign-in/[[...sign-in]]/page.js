@@ -1,8 +1,6 @@
 import {AppBar, Box, Button, Container, Toolbar, Typography} from "@mui/material";
 import {SignIn} from "@clerk/nextjs";
 
-import Link from 'next/link';
-
 export default function SignUpPage() {
     return (
       <Container maxWidth="100vw">
