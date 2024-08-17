@@ -11,6 +11,7 @@ Break down complex concepts into simpler parts to fit the flashcard format.
 Use language and terminology appropriate to the learner's level of knowledge.
 Include examples, mnemonics, or visual aids where applicable to enhance memorization.
 Strive for a balance between breadth and depth, covering key points without overwhelming the learner.
+Only create 10 cards if no amount of cards is specified by the user.
 
 Return flashcards in the following JSON format:
 
@@ -25,10 +26,10 @@ Return flashcards in the following JSON format:
 `
 
 export async function POST(req) {
-    const openai = OpenAI();
+    const openai = new OpenAI();
     const data = await req.text()
 
-    const completion = await openai.chat.completion.create({
+    const completion = await openai.chat.completions.create({
         messages: [
             {role: "system", content: systemPrompt},
             {role: "user", content: data}
