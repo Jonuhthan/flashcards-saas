@@ -34,13 +34,15 @@ export async function POST(req) {
             {role: "system", content: systemPrompt},
             {role: "user", content: data}
         ],
-        model: "gpt-4o",
+        model: "gpt-3.5-turbo",
         response_format:{type: "json_object"}
     })
 
+    console.log(completion);
+
     const flashcards = JSON.parse(completion.choices[0].message.content)
 
-    return NextResponse.json(flashcards.flashcard)
+    return NextResponse.json(flashcards.flashcards)
 }   
 
 
