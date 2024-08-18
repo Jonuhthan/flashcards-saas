@@ -19,11 +19,12 @@ export default function SignUpPage() {
           </Toolbar>
         </AppBar>
         <Box
-          height='calc(100vh - 56px)'
+          height='100vh'
           display="flex"
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
+          marginTop={3}
         >
           <Typography variant="h4" mb={5}>Sign Up</Typography>
           <SignUp/>
