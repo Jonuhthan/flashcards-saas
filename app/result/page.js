@@ -18,25 +18,40 @@ export default function ResultPage() {
         const fetchCheckoutSession = async () => {
             if (!session_id) return;
 
-             try {
-                const res = await fetch(`/api/checkout_session?session_id=${session_id}`);
+            try {
+                const res = await fetch(`/api/checkout_sessions?session_id=${session_id}`);
+                console.log(res)
                 const sessionData = await res.json();
                 if (res.ok) {
                     setSession(sessionData);
                 } else {
                     setSession(sessionData.error);
                 }
-             } catch (err) {
+            } catch (err) {
                 setError("An error occured.");
-             } finally {
+            } finally {
                 setLoading(false);
-             }
+            }
         }
 
         fetchCheckoutSession();
     }, [session_id])
 
     if (loading) {
+        return (
+            <Container
+                maxWidth="100vw"
+                sx={{
+                    textAlign: "center",
+                    mt: 4
+                }}
+            >
+                <Typography variant="h6">Loading...</Typography>
+            </Container>
+        )
+    }
+
+    if (error) {
         return (
             <Container
                 maxWidth="100vw"
@@ -59,7 +74,7 @@ export default function ResultPage() {
             }}
         >
             {
-                session.payment_status === "paid" ? (
+                session && session.payment_status === "paid" ? (
                     <>
                         <Typography variant="h4">Thank you for your purchase!</Typography>
                         <Box sx={{ mt: 22 }}>

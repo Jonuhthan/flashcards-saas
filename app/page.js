@@ -14,23 +14,27 @@ export default function Home() {
         origin: "http://localhost:3000"
       }
     })
-    
-    const checkoutSessionJSON = await checkoutSession.json();
 
     if (checkoutSession.statusCode === 500) {
       console.error(checkoutSession.message);
       return;
     }
 
+    const checkoutSessionJSON = await checkoutSession.json();
+
+
     const stripe = await getStripe();
-    const {error} = await stripe.redirectToCheckout({
-      sessionId: checkoutSession.id
-    })
+    const { error } = await stripe.redirectToCheckout({
+      // Make the id field from the Checkout Session creation API response
+      // available to this file, so you can provide it as parameter here
+      // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+      sessionId: checkoutSessionJSON.id,
+    });
 
     if (error) {
       console.warn(error.message);
     }
-  }  
+  }
 
   return (
     <Container maxWidth="100vw">
@@ -38,10 +42,10 @@ export default function Home() {
         <title>Flashcard SaaS</title>
       </Head>
       <meta name="description" content="Create flashcards from your own text!" />
-      
+
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" style={{flexGrow: 1}}>Flashcard SaaS</Typography>
+          <Typography variant="h6" style={{ flexGrow: 1 }}>Flashcard SaaS</Typography>
           <SignedOut>
             <Button color="inherit" href="/sign-in">Login</Button>
             <Button color="inherit" href="sign-up">Sign Up</Button>
@@ -49,7 +53,7 @@ export default function Home() {
           <SignedIn>
             <UserButton />
           </SignedIn>
-        </Toolbar> 
+        </Toolbar>
       </AppBar>
       <Container
         maxWidth="lg"
@@ -63,18 +67,18 @@ export default function Home() {
         }}
       >
         <Typography variant="h2">Welcome to Flashcard SaaS</Typography>
-        <Typography variant="h5" sx={{mt: 2}}>
+        <Typography variant="h5" sx={{ mt: 2 }}>
           {" "}
           The easiest way to make flashcards from your text
         </Typography>
-        <Button variant="contained" color="primary" sx={{mt: 2}} href="/sign-up">
+        <Button variant="contained" color="primary" sx={{ mt: 2 }} href="/sign-up">
           Get Started
         </Button>
       </Container>
 
       <Box sx={{ mt: 6 }}>
         <Box>
-          <Typography variant="h4" gutterBottom textAlign="center" sx={{ mb: 2}}>
+          <Typography variant="h4" gutterBottom textAlign="center" sx={{ mb: 2 }}>
             Features
           </Typography>
         </Box>
@@ -110,7 +114,7 @@ export default function Home() {
           </Typography>
           <Grid container spacing={4} sx={{ mb: 2 }}>
             <Grid item xs={12} md={6} alignItems="center">
-              <Box 
+              <Box
                 sx={{
                   p: 3,
                   border: '1px solid',
@@ -131,7 +135,7 @@ export default function Home() {
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Box 
+              <Box
                 sx={{
                   p: 3,
                   border: '1px solid',
