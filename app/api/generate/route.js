@@ -27,18 +27,18 @@ Return flashcards in the following JSON format:
 `
 
 export async function POST(req) {
-    const openai = new OpenAI();
     const data = await req.text()
-    const genAI = new GoogleGenerativeAI(GEMINI_KEY);
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_KEY);
     const model = genAI.getGenerativeModel({
         model: "gemini-1.5-flash", systemInstruction: systemPrompt, generationConfig: { responseMimeType: "application/json" }
     })
 
     const result = await model.generateContent(data);
     const response = await result.response
-    const flashcards = JSON.parse(response.text)
+    console.log(response.candidates[0].content.parts[0].text);
+    const flashcards = JSON.parse(response.candidates[0].content.parts[0].text)
 
-    return NextResponse.json(flashcards.flashcards)
+    return NextResponse.json(flashcards)
 }
 
 
